@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{83BC3351-7BBF-4387-893E-EDB616602F96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kuujinbo.Mvc.NET.W3CLog", "src\kuujinbo.Mvc.NET.W3CLog\kuujinbo.Mvc.NET.W3CLog.csproj", "{3756B768-A250-4390-9FC5-4F26604D7BD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kuujinbo.Mvc.NET.W3CLog.Tests", "src\kuujinbo.Mvc.NET.W3CLog.Tests\kuujinbo.Mvc.NET.W3CLog.Tests.csproj", "{6B600E23-CBA2-42BC-BB2C-0E86AD405D8A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3756B768-A250-4390-9FC5-4F26604D7BD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3756B768-A250-4390-9FC5-4F26604D7BD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3756B768-A250-4390-9FC5-4F26604D7BD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3756B768-A250-4390-9FC5-4F26604D7BD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B600E23-CBA2-42BC-BB2C-0E86AD405D8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B600E23-CBA2-42BC-BB2C-0E86AD405D8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B600E23-CBA2-42BC-BB2C-0E86AD405D8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B600E23-CBA2-42BC-BB2C-0E86AD405D8A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3756B768-A250-4390-9FC5-4F26604D7BD5} = {83BC3351-7BBF-4387-893E-EDB616602F96}
+		{6B600E23-CBA2-42BC-BB2C-0E86AD405D8A} = {83BC3351-7BBF-4387-893E-EDB616602F96}
+	EndGlobalSection
+EndGlobal
