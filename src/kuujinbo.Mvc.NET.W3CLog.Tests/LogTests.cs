@@ -76,7 +76,7 @@ namespace kuujinbo.Mvc.NET.W3CLog.Tests
             new Log().Warn(message);
 
             Assert.Equal(1, logs.Count);
-            Assert.EndsWith(message, logs[0]);
+            Assert.Equal(message, logs[0]);
         }
 
         [Fact]
@@ -102,7 +102,7 @@ namespace kuujinbo.Mvc.NET.W3CLog.Tests
             new Log().Info(message);
 
             Assert.Equal(1, logs.Count);
-            Assert.EndsWith(message, logs[0]);
+            Assert.Equal(message, logs[0]);
         }
     }
 }
