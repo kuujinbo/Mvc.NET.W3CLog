@@ -14,12 +14,8 @@ namespace kuujinbo.Mvc.NET.W3CLog.Tests
         public LogTests()
         {
             _configuration = new LoggingConfiguration();
-
             _memoryTarget = new MemoryTarget { Name = "mem", Layout = "${message}" };
-
             _configuration.AddTarget(_memoryTarget);
-            _configuration.LoggingRules.Add(new LoggingRule("*", LogLevel.Trace, _memoryTarget));
-            LogManager.Configuration = _configuration;
         }
 
         public void Dispose()
@@ -27,34 +23,83 @@ namespace kuujinbo.Mvc.NET.W3CLog.Tests
             if (_memoryTarget != null) _memoryTarget.Dispose();
         }
 
+        // Should only log when at a log level greater than or equal to
+        // specified level: 
+        // https://github.com/NLog/NLog/wiki/Configuration-file#log-levels
+
         [Fact]
-        public void Error_Exception_Logs()
+        public void Error_LogLevelAboveError_DoesNotLog()
         {
+            _configuration.LoggingRules.Add(new LoggingRule("*", LogLevel.Fatal, _memoryTarget));
+            LogManager.Configuration = _configuration;
+            var logs = _memoryTarget.Logs;
+
+            new Log().Error(new Exception());
+
+            Assert.Equal(0, logs.Count);
+        }
+
+        [Fact]
+        public void Error_LogLevelError_Logs()
+        {
+            _configuration.LoggingRules.Add(new LoggingRule("*", LogLevel.Error, _memoryTarget));
+            LogManager.Configuration = _configuration;
             var message = "exception thrown";
+            var logs = _memoryTarget.Logs;
+
             new Log().Error(new Exception(message));
-            var logs = _memoryTarget.Logs;
 
             Assert.Equal(1, logs.Count);
             Assert.EndsWith(message, logs[0]);
         }
 
         [Fact]
-        public void Warn_String_Logs()
+        public void Warn_LogLevelAboveWarn_DoesNotLog()
         {
-            var message = "warning";
+            _configuration.LoggingRules.Add(new LoggingRule("*", LogLevel.Error, _memoryTarget));
+            LogManager.Configuration = _configuration;
+            var logs = _memoryTarget.Logs;
+
+            new Log().Warn("");
+
+            Assert.Equal(0, logs.Count);
+        }
+
+        [Fact]
+        public void Warn_LogLevelWarn_Logs()
+        {
+            _configuration.LoggingRules.Add(new LoggingRule("*", LogLevel.Warn, _memoryTarget));
+            LogManager.Configuration = _configuration;
+            var message = "warn";
+            var logs = _memoryTarget.Logs;
+
             new Log().Warn(message);
-            var logs = _memoryTarget.Logs;
 
             Assert.Equal(1, logs.Count);
             Assert.EndsWith(message, logs[0]);
         }
 
         [Fact]
-        public void Info_String_Logs()
+        public void Info_LogLevelAboveInfo_DoesNotLog()
         {
-            var message = "warning";
-            new Log().Info(message);
+            _configuration.LoggingRules.Add(new LoggingRule("*", LogLevel.Warn, _memoryTarget));
+            LogManager.Configuration = _configuration;
             var logs = _memoryTarget.Logs;
+
+            new Log().Info("");
+
+            Assert.Equal(0, logs.Count);
+        }
+
+        [Fact]
+        public void Info_LogLevelInfo_Logs()
+        {
+            _configuration.LoggingRules.Add(new LoggingRule("*", LogLevel.Info, _memoryTarget));
+            LogManager.Configuration = _configuration;
+            var message = "info";
+            var logs = _memoryTarget.Logs;
+
+            new Log().Info(message);
 
             Assert.Equal(1, logs.Count);
             Assert.EndsWith(message, logs[0]);
