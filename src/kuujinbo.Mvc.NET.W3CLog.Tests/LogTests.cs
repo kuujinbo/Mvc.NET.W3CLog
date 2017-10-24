@@ -1,4 +1,5 @@
 ﻿using System;
+using Moq;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
@@ -104,5 +105,59 @@ namespace kuujinbo.Mvc.NET.W3CLog.Tests
             Assert.Equal(1, logs.Count);
             Assert.Equal(message, logs[0]);
         }
+
+        #region consumer
+        public class LogConsumer : ILog
+        {
+            ILog _log;
+            public LogConsumer(ILog log) { _log = log; }
+
+            public void Error(Exception exception)
+            {
+                _log.Error(exception);
+            }
+
+            public void Warn(string message)
+            {
+                _log.Warn(message);
+            }
+
+            public void Info(string message)
+            {
+                _log.Info(message);
+            }
+        }
+
+
+        [Fact]
+        public void LogConsumer_Error_CallsInterfaceError()
+        {
+            var mock = new Mock<ILog>();
+
+            new LogConsumer(mock.Object).Error(new Exception());
+
+            mock.Verify(x => x.Error(It.IsAny<Exception>()), Times.Once());
+        }
+
+        [Fact]
+        public void LogConsumer_Warn_CallsInterfaceWarn()
+        {
+            var mock = new Mock<ILog>();
+
+            new LogConsumer(mock.Object).Warn(It.IsAny<string>());
+
+            mock.Verify(x => x.Warn(It.IsAny<string>()), Times.Once());
+        }
+
+        [Fact]
+        public void LogConsumer_Info_CallsInterfaceInfo()
+        {
+            var mock = new Mock<ILog>();
+
+            new LogConsumer(mock.Object).Info(It.IsAny<string>());
+
+            mock.Verify(x => x.Info(It.IsAny<string>()), Times.Once());
+        }
+        #endregion
     }
 }
